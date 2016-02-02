@@ -40,16 +40,7 @@ class PatternFinder
 
   def path_hash_builder(line)
     line = reformat(line)
-    line_length = line.length
-    paths_length = paths.length
-
-    if @patterns.has_key?(line_length)
-
-
-    else
-      @paths[paths_length + 1] = {line_length => line, "matching" => "NO MATCH", "best" => "NO MATCH"}
-    end
-    binding.pry
+    match_by_length(line)
   end
 
   def reformat(line)
@@ -60,13 +51,32 @@ class PatternFinder
   end
 
   def match_by_length(line)
-    matching_patterns = @patterns[line_length]
-    @paths[paths_length + 1] = {line_length => line, "matching" => matching_patterns, "best" => ""}
+    line_length = line.length
+    paths_length = @paths.length
 
+    if @patterns.has_key?(line_length)
+      matching_patterns = @patterns[line_length]
+      match_by_character(matching_patterns, line)
+    else
+      @paths[paths_length + 1] = {line_length => line, "matching" => "NO MATCHES", "best" => ""}
+    end
   end
 
-  def match_by_character
+  def match_by_character(matching_patterns, line)
+    line_length = line.length
+    paths_length = @paths.length
+    character_match_array = []
 
+    matching_patterns.each do |array|
+      score = 0
+      array.each_with_index do |character, index|
+        if character == line[index] || character == "*"
+          score += 1
+        end
+      end
+      score == array.length ? character_match_array << array : "false"
+    end
+    @paths[paths_length + 1] = {line_length => line, "matching" => character_match_array, "best" => ""}
   end
 
   def best_match
