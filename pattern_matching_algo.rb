@@ -24,8 +24,10 @@ class PatternFinder
         counter += 1
       end
     end
-    puts "Patterns: #{self.patterns}"
-    puts "Paths: #{self.paths}"
+    # puts "Patterns: #{self.patterns}"
+    # puts "Paths: #{self.paths}"
+    best_match
+    display
   end
 
   def pattern_hash_builder(line)
@@ -80,11 +82,41 @@ class PatternFinder
   end
 
   def best_match
-    best_pattern = {}
+    @paths.each do |index, path|
+      if path["matching"] == "NO MATCHES"
+        path["best"] = "NO MATCH"
+      elsif path["matching"].count == 1
+        path["best"] = path["matching"]
+      else
+        path["best"] = multiple_matches(path)
+      end
+    end
   end
 
-  def star_counter(pattern)
+  def multiple_matches(path)
+    leader = []
+    best_count = 100
 
+    path["matching"].each do |array|
+      asterisk_count = array.count('*')
+      if asterisk_count < best_count
+        leader = array
+        best_count = asterisk_count
+      elsif asterisk_count == best_count
+        # tie_breaker
+      end
+    end
+    leader
+  end
+
+  def display
+    @paths.each do |path, value|
+      if value["best"] != "NO MATCH"
+        puts value["best"].join(',')
+      else
+        puts value["best"]
+      end
+    end
   end
 
 
