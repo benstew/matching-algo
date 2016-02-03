@@ -30,7 +30,7 @@ attr_accessor :pattern_data, :path_data
   def pattern_data
     @pattern_data = []
 
-    100.times do |value|
+    1000.times do |value|
       test1 = rand(10).to_s.chars.map(&:to_i)
       index1 = rand(1)
       test2 = rand(100).to_s.chars.map(&:to_i)
@@ -56,7 +56,7 @@ attr_accessor :pattern_data, :path_data
   def path_data
     @path_data = []
 
-    100.times do |value|
+    1000.times do |value|
       test1 = rand(10).to_s.chars.map(&:to_i)
       index1 = rand(1)
       test2 = rand(100).to_s.chars.map(&:to_i)
