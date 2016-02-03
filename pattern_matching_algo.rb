@@ -24,8 +24,6 @@ class PatternFinder
         counter += 1
       end
     end
-    # puts "Patterns: #{self.patterns}"
-    # puts "Paths: #{self.paths}"
     best_match
     display
   end
@@ -103,10 +101,24 @@ class PatternFinder
         leader = array
         best_count = asterisk_count
       elsif asterisk_count == best_count
-        # tie_breaker
+        leader = tie_breaker(leader, array, 0)
       end
     end
     leader
+  end
+
+  def tie_breaker(leader, challenger, counter)
+    # Recursion
+    counter = counter
+
+    if leader[counter] != '*' && challenger[counter] != '*'
+      counter += 1
+      tie_breaker(leader, challenger, counter)
+    elsif leader[counter] != '*'
+      return leader
+    elsif challenger[counter] != '*'
+      return challenger
+    end
   end
 
   def display
@@ -118,8 +130,6 @@ class PatternFinder
       end
     end
   end
-
-
 end
 
 input_file = ARGV.first
