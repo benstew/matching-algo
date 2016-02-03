@@ -3,3 +3,6 @@ a,*,*
 NO MATCH
 NO MATCH
 foo,bar,baz
+1,2,3,4,5,*
+NO MATCH
+*,*,*

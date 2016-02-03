@@ -1,3 +1,11 @@
+#Pattern Matching Paths program
+#Ben Stewart 2/3/2016
+#Written in Ruby 2.2.1p85
+
+
+
+
+
 require 'pry'
 # Instructions to run file from Command Line: $ruby pattern_matching_paths.rb input_file
 
@@ -104,12 +112,12 @@ class PatternMatcher
 
   def multiple_matches(path_hash)
     best_match = []
-    best_count = 1000
+    best_count = ''
     # best_count = path_hash["matching"].first.count('*')
-
     path_hash["matching"].each do |matching_array|
       asterisk_count = matching_array.count('*')
-      if asterisk_count < best_count
+      # binding.pry
+      if best_count == '' || asterisk_count < best_count
         best_match = matching_array
         best_count = asterisk_count
       elsif asterisk_count == best_count
