@@ -20,8 +20,7 @@ class PatternMatcher
     # Parse data, find best pattern match for each path, display results, print results to output file
     parse(input_data)
     find_best_match
-    puts "#{@patterns}"
-    puts "#{@paths}"
+    # puts "#{@paths}"
     display_best_matches
     create_output_file
   end
@@ -92,7 +91,7 @@ class PatternMatcher
           score += 1
         end
       end
-      score == array.length ? character_match_array << array : "false"
+      score == array.length ? character_match_array << array : "False"
     end
     @paths[path_hash_length + 1] = {path_hash_length => path, "matching" => character_match_array, "best" => ""}
   end
@@ -100,6 +99,8 @@ class PatternMatcher
   def find_best_match
     @paths.each do |index, path_hash|
       if path_hash["matching"] == "NO MATCHES"
+        path_hash["best"] = "NO MATCH"
+      elsif path_hash["matching"].empty?
         path_hash["best"] = "NO MATCH"
       elsif path_hash["matching"].count == 1
         path_hash["best"] = path_hash["matching"]
