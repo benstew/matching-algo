@@ -1,4 +1,5 @@
 require 'pry'
+# Instructions to run File from Command Line: $ruby pattern_matching_paths.rb input_file
 
 class PatternMatcher
   attr_accessor :patterns, :paths
@@ -14,6 +15,7 @@ class PatternMatcher
     parse(input_data)
     find_best_match
     display_best_matches
+    create_output_file
   end
 
   def parse(input_data)
@@ -138,6 +140,20 @@ class PatternMatcher
       end
     end
   end
+
+  def create_output_file
+    output_file = File.new("output.txt", "w")
+
+    @paths.each do |path, path_hash|
+      if path_hash["best"] != "NO MATCH"
+        output_file.puts(path_hash["best"].join(',') + "\n")
+      else
+        output_file.puts(path_hash["best"] + "\n")
+      end
+    end
+    output_file.close
+  end
+
 end
 
 input_file = ARGV.first
