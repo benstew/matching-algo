@@ -1,5 +1,5 @@
 require 'pry'
-# Instructions to run File from Command Line: $ruby pattern_matching_paths.rb input_file
+# Instructions to run file from Command Line: $ruby pattern_matching_paths.rb input_file
 
 class PatternMatcher
   attr_accessor :patterns, :paths
@@ -12,6 +12,7 @@ class PatternMatcher
   end
 
   def process(input_data)
+    # Parse data, find best pattern match for each path, display results, print results to output file
     parse(input_data)
     find_best_match
     display_best_matches
@@ -45,12 +46,12 @@ class PatternMatcher
   end
 
   def create_path_hash(path)
-    #Instance variable hash of all paths and patterns that match according to length
-    path = reformat(path)
+    #Instance variable hash of all paths with patterns that match based on length and characters
+    path = format(path)
     match_by_length(path)
   end
 
-  def reformat(path)
+  def format(path)
     # Removing any leading/trailing slashes from path data
     if path[0] == '/'
       path[0] = ''
@@ -89,7 +90,6 @@ class PatternMatcher
     @paths[path_hash_length + 1] = {path_hash_length => path, "matching" => character_match_array, "best" => ""}
   end
 
-
   def find_best_match
     @paths.each do |index, path_hash|
       if path_hash["matching"] == "NO MATCHES"
@@ -104,7 +104,8 @@ class PatternMatcher
 
   def multiple_matches(path_hash)
     best_match = []
-    best_count = 100
+    best_count = 1000
+    # best_count = path_hash["matching"].first.count('*')
 
     path_hash["matching"].each do |matching_array|
       asterisk_count = matching_array.count('*')
@@ -120,7 +121,6 @@ class PatternMatcher
 
   def tie_breaker(leader, challenger, counter)
     # Recursive tie breaker to determine the best matching pattern
-
     if leader[counter] != '*' && challenger[counter] != '*'
       counter += 1
       tie_breaker(leader, challenger, counter)
@@ -143,7 +143,6 @@ class PatternMatcher
 
   def create_output_file
     output_file = File.new("output.txt", "w")
-
     @paths.each do |path, path_hash|
       if path_hash["best"] != "NO MATCH"
         output_file.puts(path_hash["best"].join(',') + "\n")
