@@ -1,13 +1,10 @@
-#Pattern Matching Paths program
+#Pattern Matching Path program
 #Ben Stewart 2/3/2016
 #Written in Ruby 2.2.1p85
 
-
-
-
-
 require 'pry'
 # Instructions to run file from Command Line: $ruby pattern_matching_paths.rb input_file
+# Long Patterns investigate
 
 class PatternMatcher
   attr_accessor :patterns, :paths
@@ -23,6 +20,8 @@ class PatternMatcher
     # Parse data, find best pattern match for each path, display results, print results to output file
     parse(input_data)
     find_best_match
+    puts "#{@patterns}"
+    puts "#{@paths}"
     display_best_matches
     create_output_file
   end
@@ -113,10 +112,8 @@ class PatternMatcher
   def multiple_matches(path_hash)
     best_match = []
     best_count = ''
-    # best_count = path_hash["matching"].first.count('*')
     path_hash["matching"].each do |matching_array|
       asterisk_count = matching_array.count('*')
-      # binding.pry
       if best_count == '' || asterisk_count < best_count
         best_match = matching_array
         best_count = asterisk_count
