@@ -18,6 +18,7 @@ class PatternMatcher
     parse(input_data)
     find_best_match
     puts "Time elapsed #{(@end_time - @beginning_time)*1000} milliseconds"
+    # display_best_matches
   end
 
   def parse(input_data)
@@ -55,22 +56,8 @@ class PatternMatcher
     return path.split('/')
   end
 
-  # def match_by_length(path)
-  #   # Finding matching patterns based on length
-  #   path_length = path.length
-  #   path_hash_length = @paths.length
-  #
-  #   if @patterns.has_key?(path_length)
-  #     matching_patterns = @patterns[path_length]
-  #     match_by_character(matching_patterns, path)
-  #   else
-  #     @paths[path_hash_length + 1] = {path_length => path, "matching" => "NO MATCHES", "best" => ""}
-  #   end
-  # end
-
   def match_by_character(path)
     #Iterating through patterns that have similar lengths and comparing characters
-    # path_hash_length = @paths.length
     length = @paths.length
     character_match_array = []
 
@@ -118,7 +105,13 @@ class PatternMatcher
 
   def tie_breaker(leader, challenger, counter)
     # Recursive tie breaker to determine the best matching pattern
-    if leader[counter] != '*' && challenger[counter] != '*'
+    if leader == nil
+      return challenger
+    # challenger_length = challenger.length || leader_length + 1
+
+  elsif leader.length < challenger.length
+      return leader
+    elsif leader[counter] != '*' && challenger[counter] != '*'
       counter += 1
       tie_breaker(leader, challenger, counter)
     elsif leader[counter] != '*'
