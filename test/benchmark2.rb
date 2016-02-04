@@ -1,3 +1,4 @@
+#Second Benchmark test w/out character hash
 require 'pry'
 
 # Instructions to run file from Command Line: $ruby pattern_matching_paths.rb input_file
@@ -8,13 +9,12 @@ class PatternMatcher
   def initialize(input_file)
     self.beginning_time = Time.now
     input_data = open(input_file)
-    self.patterns = {}
+    self.patterns = []
     self.paths = {}
     process(input_data)
   end
 
   def process(input_data)
-    # Parse data, find best pattern match for each path, display results, print results to output file
     parse(input_data)
     find_best_match
     puts "Time elapsed #{(@end_time - @beginning_time)*1000} milliseconds"
@@ -26,7 +26,7 @@ class PatternMatcher
     input_data.each do |line_item|
       line_item = line_item.chomp
       if line_item.to_i.to_s != line_item && counter == 1
-        create_pattern_hash(line_item)
+        create_pattern_array(line_item)
       elsif line_item.to_i.to_s != line_item && counter == 2
         create_path_hash(line_item)
       else
@@ -35,21 +35,16 @@ class PatternMatcher
     end
   end
 
-  def create_pattern_hash(pattern)
-    # Creating instance variable hash of all patterns from input file
+  def create_pattern_array(pattern)
     pattern = pattern.split(',')
     pattern_length = pattern.length
-    if @patterns[pattern_length]
-      @patterns[pattern_length].push(pattern)
-    else
-      @patterns[pattern_length] = [pattern]
-    end
+    @patterns << pattern
   end
 
   def create_path_hash(path)
     #Instance variable hash of all paths with patterns that match based on length and characters
     path = format(path)
-    match_by_length(path)
+    match_by_character(path)
   end
 
   def format(path)
@@ -60,35 +55,35 @@ class PatternMatcher
     return path.split('/')
   end
 
-  def match_by_length(path)
-    # Finding matching patterns based on length
-    path_length = path.length
-    path_hash_length = @paths.length
+  # def match_by_length(path)
+  #   # Finding matching patterns based on length
+  #   path_length = path.length
+  #   path_hash_length = @paths.length
+  #
+  #   if @patterns.has_key?(path_length)
+  #     matching_patterns = @patterns[path_length]
+  #     match_by_character(matching_patterns, path)
+  #   else
+  #     @paths[path_hash_length + 1] = {path_length => path, "matching" => "NO MATCHES", "best" => ""}
+  #   end
+  # end
 
-    if @patterns.has_key?(path_length)
-      matching_patterns = @patterns[path_length]
-      match_by_character(matching_patterns, path)
-    else
-      @paths[path_hash_length + 1] = {path_length => path, "matching" => "NO MATCHES", "best" => ""}
-    end
-  end
-
-  def match_by_character(matching_patterns, path)
+  def match_by_character(path)
     #Iterating through patterns that have similar lengths and comparing characters
-    path_length = path.length
-    path_hash_length = @paths.length
+    # path_hash_length = @paths.length
+    length = @paths.length
     character_match_array = []
 
-    matching_patterns.each do |array|
+    @patterns.each do |pattern|
       score = 0
-      array.each_with_index do |character, index|
+      pattern.each_with_index do |character, index|
         if character == path[index] || character == "*"
           score += 1
         end
       end
-      score == array.length ? character_match_array << array : "False"
+      score == pattern.length ? character_match_array << pattern : "False"
     end
-    @paths[path_hash_length + 1] = {path_hash_length => path, "matching" => character_match_array, "best" => ""}
+    @paths[length] = {"matching" => character_match_array, "best" => ""}
   end
 
   def find_best_match
