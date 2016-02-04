@@ -1,10 +1,9 @@
 #Pattern Matching Path program
-#Ben Stewart 2/3/2016
+#Ben Stewart 2/4/2016
 #Written in Ruby 2.2.1p85
 
 require 'pry'
 # Instructions to run file from Command Line: $ruby pattern_matching_paths.rb input_file
-# Long Patterns investigate
 
 class PatternMatcher
   attr_accessor :patterns, :paths
@@ -20,7 +19,6 @@ class PatternMatcher
     # Parse data, find best pattern match for each path, display results, print results to output file
     parse(input_data)
     find_best_match
-    # puts "#{@paths}"
     display_best_matches
     create_output_file
   end
