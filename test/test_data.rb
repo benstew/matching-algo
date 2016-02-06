@@ -2,26 +2,6 @@ require 'pry'
 
 class TestData
 attr_accessor :pattern_data, :path_data
-# 11
-# *,b,*
-# a,*,*
-# *,*,c
-# foo,bar,baz
-# w,x,*,*
-# *,x,y,z
-# *,*,*
-# 1,2,3,4,5,*
-# 1,2,3,4,*,6
-# 1,*,3,4,5,6
-# 7
-# /w/x/y/z/
-# a/b/c
-# foo/
-# foo/bar/
-# foo/bar/baz/
-# 1/2/3/4/5/6
-# 1/2/
-# 1/2/3/
 
   def initialize
     create_input_file
@@ -90,7 +70,6 @@ attr_accessor :pattern_data, :path_data
     @path_data.each do |path|
       input_file.puts(path + "\n")
     end
-
     input_file.close
   end
 end
