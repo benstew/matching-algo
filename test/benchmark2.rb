@@ -104,10 +104,8 @@ class PatternMatcher
   end
 
   def tie_breaker(leader, challenger, counter)
-    # Recursive tie breaker to determine the best matching pattern
     if leader == nil
       return challenger
-    # challenger_length = challenger.length || leader_length + 1
 
   elsif leader.length < challenger.length
       return leader
