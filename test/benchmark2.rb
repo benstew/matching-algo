@@ -106,7 +106,7 @@ class PatternMatcher
   def tie_breaker(leader, challenger, counter)
     if leader == nil
       return challenger
-
+ 
   elsif leader.length < challenger.length
       return leader
     elsif leader[counter] != '*' && challenger[counter] != '*'
