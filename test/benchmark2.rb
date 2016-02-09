@@ -2,7 +2,6 @@
 require 'pry'
 
 # Instructions to run file from Command Line: $ruby pattern_matching_paths.rb input_file
-
 class PatternMatcher
   attr_accessor :patterns, :paths, :beginning_time, :end_time
 
@@ -18,7 +17,7 @@ class PatternMatcher
     parse(input_data)
     find_best_match
     puts "Time elapsed #{(@end_time - @beginning_time)*1000} milliseconds"
-    # display_best_matches
+    display_best_matches
   end
 
   def parse(input_data)
@@ -106,7 +105,7 @@ class PatternMatcher
   def tie_breaker(leader, challenger, counter)
     if leader == nil
       return challenger
- 
+
   elsif leader.length < challenger.length
       return leader
     elsif leader[counter] != '*' && challenger[counter] != '*'
@@ -118,7 +117,6 @@ class PatternMatcher
       return challenger
     end
   end
-
 end
 
 input_file = ARGV.first
