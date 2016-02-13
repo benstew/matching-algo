@@ -1,6 +1,6 @@
 require 'pry'
-
-# Instructions to run file from Command Line: $ruby pattern_matching_paths.rb input_file
+# Instructions to run file from Command Line:
+## $ruby pattern_matching_paths.rb input_file
 
 class PatternMatcher
   attr_accessor :patterns, :paths, :beginning_time, :end_time
